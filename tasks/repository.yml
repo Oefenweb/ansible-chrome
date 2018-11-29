@@ -8,30 +8,11 @@
   tags:
     - chrome-repository-public-key
 
-#- name: add chrome repository
-#  apt_repository:
-#    repo: "{{ item.type }} {{ item.url }} {{ item.component }}"
-#    state: present
-#  with_items: "{{ chrome_repositories }}"
-#  tags:
-#    - chrome-repository-add
-
-# Workaround for missing x86 distribution
 - name: add chrome repository
-  copy:
-    content: "{{ chrome_repository.type }} [arch={{ chrome_repository.arch }}] {{ chrome_repository.url }} {{ chrome_repository.component }}"
-    dest: /etc/apt/sources.list.d/google-chrome.list
-    owner: root
-    group: root
-    mode: 0644
-  register: google_repo
+  apt_repository:
+    repo: "{{ item.type }} {{ item.url }} {{ item.component }}"
+    state: present
+    update_cache: true
+  with_items: "{{ chrome_repositories }}"
   tags:
     - chrome-repository-add
-    - chrome-repository-add-workaround
-
-- name: apt update
-  apt:
-    update_cache: true
-  when: google_repo | changed
-  tags:
-    - chrome-repository-update

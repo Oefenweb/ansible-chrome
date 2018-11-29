@@ -1,6 +1,7 @@
 # meta file for chrome
 ---
 galaxy_info:
+  role_name: chrome
   author: Mischa ter Smitten
   company: Oefenweb.nl B.V.
   description: Set up Google Chrome in Debian-like systems
@@ -11,9 +12,11 @@ galaxy_info:
       versions:
         - trusty
         - xenial
+        - bionic
     - name: Debian
       versions:
         - jessie
+        - stretch
   galaxy_tags:
     - development
     - system
