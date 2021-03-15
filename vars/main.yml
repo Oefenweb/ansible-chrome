@@ -1,4 +1,4 @@
-# vars file for chrome
+# vars file
 ---
 chrome_repositories:
   - type: 'deb [arch=amd64]'

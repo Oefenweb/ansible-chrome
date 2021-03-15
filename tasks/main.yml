@@ -1,4 +1,4 @@
-# tasks file for chrome
+# tasks file
 ---
 - include: repository.yml
   tags:
