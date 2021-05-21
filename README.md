@@ -1,12 +1,14 @@
 ## chrome
 
-[![Build Status](https://travis-ci.org/Oefenweb/ansible-chrome.svg?branch=master)](https://travis-ci.org/Oefenweb/ansible-chrome) [![Ansible Galaxy](http://img.shields.io/badge/ansible--galaxy-chrome-blue.svg)](https://galaxy.ansible.com/Oefenweb/ansible-chrome)
+[![CI](https://github.com/Oefenweb/ansible-chrome/workflows/CI/badge.svg)](https://github.com/Oefenweb/ansible-chrome/actions?query=workflow%3ACI)
+[![Ansible Galaxy](http://img.shields.io/badge/ansible--galaxy-chrome-blue.svg)](https://galaxy.ansible.com/Oefenweb/ansible-chrome)
 
 Set up [Google Chrome](https://www.google.com/chrome/) in Debian-like systems.
 
 #### Requirements
 
-None
+* `software-properties-common` (will be installed)
+* `dirmngr` (will be installed)
 
 #### Variables
 
