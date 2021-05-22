@@ -5,5 +5,9 @@ chrome_repositories:
     url: 'http://dl.google.com/linux/chrome/deb/ stable'
     component: main
 
+chrome_dependencies_pre:
+  - software-properties-common
+  - dirmngr
+
 chrome_dependencies:
   - google-chrome-stable

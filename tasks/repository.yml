@@ -1,6 +1,15 @@
 # tasks file
 ---
-- name: add public key
+- name: repository | dependencies
+  apt:
+    name: "{{ chrome_dependencies_pre }}"
+    state: "{{ apt_install_state | default('latest') }}"
+    update_cache: true
+    cache_valid_time: "{{ apt_update_cache_valid_time | default(3600) }}"
+  tags:
+    - chrome-repository-dependencies
+
+- name: repository | add public key
   apt_key:
     id: A040830F7FAC5991
     url: https://dl-ssl.google.com/linux/linux_signing_key.pub
@@ -8,7 +17,7 @@
   tags:
     - chrome-repository-public-key
 
-- name: add chrome repository
+- name: repository | add chrome repository
   apt_repository:
     repo: "{{ item.type }} {{ item.url }} {{ item.component }}"
     state: present
