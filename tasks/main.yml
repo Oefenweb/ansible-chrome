@@ -1,12 +1,12 @@
 # tasks file
 ---
-- include: repository.yml
+- ansible.builtin.include: repository.yml
   tags:
     - configuration
     - chrome
     - chrome-repository
 
-- include: install.yml
+- ansible.builtin.include: install.yml
   tags:
     - configuration
     - chrome
