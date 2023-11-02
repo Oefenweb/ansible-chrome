@@ -24,7 +24,7 @@ None
 ---
 - hosts: all
   roles:
-    - chrome
+    - oefenweb.chrome
 ```
 
 #### License
