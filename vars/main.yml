@@ -8,6 +8,7 @@ chrome_repositories:
 chrome_dependencies_pre:
   - software-properties-common
   - dirmngr
+  - gpg-agent
 
 chrome_dependencies:
   - google-chrome-stable
