@@ -1,14 +1,22 @@
 # vars file
 ---
+chrome_keyring_src: https://dl-ssl.google.com/linux/linux_signing_key.pub
+chrome_keyring_dst: /usr/share/keyrings/chrome.gpg
 chrome_repositories:
+  - type: 'deb [arch=amd64 signed-by={{ chrome_keyring_dst }}]'
+    url: 'http://dl.google.com/linux/chrome/deb/ stable'
+    component: main
   - type: 'deb [arch=amd64]'
     url: 'http://dl.google.com/linux/chrome/deb/ stable'
     component: main
+    state: absent
 
 chrome_dependencies_pre:
   - software-properties-common
   - dirmngr
-  - gpg-agent
+  - apt-transport-https
+  - wget
+  - coreutils
 
 chrome_dependencies:
   - google-chrome-stable
