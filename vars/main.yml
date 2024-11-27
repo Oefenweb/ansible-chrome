@@ -10,6 +10,10 @@ chrome_repositories:
     url: 'https://dl.google.com/linux/chrome/deb/ stable'
     component: main
     state: absent
+  - type: 'deb [arch=amd64]'
+    url: 'http://dl.google.com/linux/chrome/deb/ stable'
+    component: main
+    state: absent
 
 chrome_dependencies_pre:
   - software-properties-common
