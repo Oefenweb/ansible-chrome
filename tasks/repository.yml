@@ -31,15 +31,9 @@
   ansible.builtin.apt_repository:
     repo: "{{ item.type }} {{ item.url }} {{ item.component }}"
     state: "{{ item.state | default('present') }}"
+    filename: google-chrome
     update_cache: true
     mode: 0644
   with_items: "{{ chrome_repositories }}"
   tags:
     - chrome-repository-add
-
-- name: repository | (keyring) file | download  # noqa command-instead-of-module risky-shell-pipe
-  ansible.builtin.shell: >
-    cat /etc/apt/sources.list.d/*.*
-  changed_when: false
-  tags:
-    - chrome-repository-keyring-file-download
