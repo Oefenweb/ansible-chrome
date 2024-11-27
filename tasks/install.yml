@@ -10,16 +10,43 @@
   tags:
     - chrome-install-copy
 
-- name: install | copy
-  ansible.builtin.copy:
-    content: ''
-    dest: /etc/apt/sources.list.d/google-chrome.list
-    force: false
-    mode: 0000
+- name: install | dependencies | fail
+  ansible.builtin.apt:
+    name: "{{ chrome_dependencies }}"
+    state: "{{ apt_install_state | default('latest') }}"
+    update_cache: true
+    cache_valid_time: "{{ apt_update_cache_valid_time | default(3600) }}"
+  ignore_errors: true
+  tags:
+    - chrome-install-dependencies
+
+- name: install | dependencies | debug
+  ansible.builtin.shell: >
+    cat /etc/apt/sources.list.d/google-chrome.list
+  register: _cat
+  changed_when: false
   tags:
     - chrome-install-copy
 
-- name: install | dependencies
+- name: install | dependencies | fix
+  ansible.builtin.lineinfile:
+    dest: /etc/apt/sources.list.d/google-chrome.list
+    regexp: '(?i)^(deb.*)'
+    line: '# \1'
+    backrefs: true
+    state: present
+  tags:
+    - chrome-install-copy
+
+- name: install | dependencies | debug
+  ansible.builtin.shell: >
+    cat /etc/apt/sources.list.d/google-chrome.list
+  register: _cat
+  changed_when: false
+  tags:
+    - chrome-install-copy
+
+- name: install | dependencies | succeed
   ansible.builtin.apt:
     name: "{{ chrome_dependencies }}"
     state: "{{ apt_install_state | default('latest') }}"
