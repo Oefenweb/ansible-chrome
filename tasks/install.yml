@@ -1,10 +1,21 @@
 # tasks file
 ---
+- name: install | copy
+  ansible.builtin.copy:
+    src: "{{ chrome_etc_default_file.lstrip('/') }}.j2"
+    dest: "{{ chrome_etc_default_file }}"
+    owner: root
+    group: root
+    mode: 0644
+  tags:
+    - chrome-install-copy
+
 - name: install | dependencies
   ansible.builtin.apt:
     name: "{{ chrome_dependencies }}"
     state: "{{ apt_install_state | default('latest') }}"
     update_cache: true
     cache_valid_time: "{{ apt_update_cache_valid_time | default(3600) }}"
+  failed_when: false
   tags:
     - chrome-install-dependencies

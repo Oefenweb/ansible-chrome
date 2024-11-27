@@ -23,3 +23,5 @@ chrome_dependencies_pre:
 
 chrome_dependencies:
   - google-chrome-stable
+
+chrome_etc_default_file: /etc/default/google-chrome
