@@ -10,16 +10,6 @@
   tags:
     - chrome-install-dependencies
 
-- name: install | dependencies | debug
-  ansible.builtin.shell: >
-    cat /etc/apt/sources.list.d/google-chrome.list
-  register: _cat
-  changed_when: false
-  failed_when: false
-  tags:
-    - chrome-install-dependencies
-    - chrome-install-dependencies-debug
-
 # - name: install | dependencies | fix
 #   ansible.builtin.copy:
 #     src: "{{ chrome_etc_default_file.lstrip('/') }}"
@@ -57,23 +47,12 @@
 #     - chrome-install-dependencies-fix
 
 - name: install | dependencies | fix
-  ansible.builtin.shell: >
-    rm -fv /etc/apt/sources.list.d/google-chrome.list
-  register: _rm
-  changed_when: false
+  ansible.builtin.file:
+    path: /etc/apt/sources.list.d/google-chrome.list
+    state: absent
   tags:
     - chrome-install-dependencies
     - chrome-install-dependencies-fix
-
-- name: install | dependencies | debug
-  ansible.builtin.shell: >
-    cat /etc/apt/sources.list.d/google-chrome.list
-  register: _cat
-  changed_when: false
-  failed_when: false
-  tags:
-    - chrome-install-dependencies
-    - chrome-install-dependencies-debug
 
 - name: install | dependencies | succeed
   ansible.builtin.apt:
