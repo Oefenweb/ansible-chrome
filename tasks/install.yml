@@ -15,31 +15,46 @@
     cat /etc/apt/sources.list.d/google-chrome.list
   register: _cat
   changed_when: false
+  failed_when: false
   tags:
     - chrome-install-dependencies
     - chrome-install-dependencies-debug
 
+# - name: install | dependencies | fix
+#   ansible.builtin.copy:
+#     src: "{{ chrome_etc_default_file.lstrip('/') }}"
+#     dest: "{{ chrome_etc_default_file }}"
+#     owner: root
+#     group: root
+#     mode: 0644
+#   tags:
+#     - chrome-install-dependencies
+#     - chrome-install-dependencies-fix
+
 - name: install | dependencies | fix
-  ansible.builtin.copy:
-    src: "{{ chrome_etc_default_file.lstrip('/') }}"
+  ansible.builtin.lineinfile:
     dest: "{{ chrome_etc_default_file }}"
-    owner: root
-    group: root
-    mode: 0644
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+  with_items:
+    - regexp: '^repo_add_once='
+      line: 'repo_add_once="true"'
+    - regexp: '^repo_reenable_on_distupgrade='
+      line: 'repo_reenable_on_distupgrade="false"'
   tags:
     - chrome-install-dependencies
     - chrome-install-dependencies-fix
 
-#- name: install | dependencies | fix
-#  ansible.builtin.lineinfile:
-#    dest: /etc/apt/sources.list.d/google-chrome.list
-#    regexp: '(?i)^(deb.*)'
-#    line: '# \1'
-#    backrefs: true
-#    state: present
-#  tags:
-#    - chrome-install-dependencies
-#    - chrome-install-dependencies-fix
+# - name: install | dependencies | fix
+#   ansible.builtin.lineinfile:
+#     dest: /etc/apt/sources.list.d/google-chrome.list
+#     regexp: '(?i)^(deb.*)'
+#     line: '# \1'
+#     backrefs: true
+#     state: present
+#   tags:
+#     - chrome-install-dependencies
+#     - chrome-install-dependencies-fix
 
 - name: install | dependencies | fix
   ansible.builtin.shell: >
@@ -55,6 +70,7 @@
     cat /etc/apt/sources.list.d/google-chrome.list
   register: _cat
   changed_when: false
+  failed_when: false
   tags:
     - chrome-install-dependencies
     - chrome-install-dependencies-debug
