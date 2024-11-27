@@ -10,20 +10,9 @@
   tags:
     - chrome-install-dependencies
 
-# - name: install | dependencies | fix
-#   ansible.builtin.copy:
-#     src: "{{ chrome_etc_default_file.lstrip('/') }}"
-#     dest: "{{ chrome_etc_default_file }}"
-#     owner: root
-#     group: root
-#     mode: 0644
-#   tags:
-#     - chrome-install-dependencies
-#     - chrome-install-dependencies-fix
-
 - name: install | dependencies | fix
   ansible.builtin.lineinfile:
-    dest: "{{ chrome_etc_default_file }}"
+    dest: /etc/default/google-chrome
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
   with_items:
@@ -34,17 +23,6 @@
   tags:
     - chrome-install-dependencies
     - chrome-install-dependencies-fix
-
-# - name: install | dependencies | fix
-#   ansible.builtin.lineinfile:
-#     dest: /etc/apt/sources.list.d/google-chrome.list
-#     regexp: '(?i)^(deb.*)'
-#     line: '# \1'
-#     backrefs: true
-#     state: present
-#   tags:
-#     - chrome-install-dependencies
-#     - chrome-install-dependencies-fix
 
 - name: install | dependencies | fix
   ansible.builtin.file:
