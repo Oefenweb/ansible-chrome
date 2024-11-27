@@ -21,7 +21,7 @@
 
 - name: repository | (keyring) file | download  # noqa command-instead-of-module risky-shell-pipe
   ansible.builtin.shell: >
-    wget -O- {{ chrome_keyring_src }} | gpg --dearmor | tee {{ chrome_keyring_dst }} > /dev/null
+    wget -O- {{ chrome_keyring_src }} | gpg --dearmor --yes --output {{ chrome_keyring_dst }}
   args:
     creates: "{{ chrome_keyring_dst }}"
   tags:

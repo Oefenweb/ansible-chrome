@@ -20,7 +20,6 @@ chrome_dependencies_pre:
   - dirmngr
   - apt-transport-https
   - wget
-  - coreutils
 
 chrome_dependencies:
   - google-chrome-stable
