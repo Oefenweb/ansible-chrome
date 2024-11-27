@@ -1,6 +1,38 @@
 # tasks file
 ---
-- name: install | dependencies
+- name: install | dependencies | fail
+  ansible.builtin.apt:
+    name: "{{ chrome_dependencies }}"
+    state: "{{ apt_install_state | default('latest') }}"
+    update_cache: true
+    cache_valid_time: "{{ apt_update_cache_valid_time | default(3600) }}"
+  failed_when: false
+  tags:
+    - chrome-install-dependencies
+
+- name: install | dependencies | fix
+  ansible.builtin.lineinfile:
+    dest: /etc/default/google-chrome
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+  with_items:
+    - regexp: '^repo_add_once='
+      line: 'repo_add_once="true"'
+    - regexp: '^repo_reenable_on_distupgrade='
+      line: 'repo_reenable_on_distupgrade="false"'
+  tags:
+    - chrome-install-dependencies
+    - chrome-install-dependencies-fix
+
+- name: install | dependencies | fix
+  ansible.builtin.file:
+    path: /etc/apt/sources.list.d/google-chrome.list
+    state: absent
+  tags:
+    - chrome-install-dependencies
+    - chrome-install-dependencies-fix
+
+- name: install | dependencies | succeed
   ansible.builtin.apt:
     name: "{{ chrome_dependencies }}"
     state: "{{ apt_install_state | default('latest') }}"
