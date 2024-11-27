@@ -1,15 +1,5 @@
 # tasks file
 ---
-- name: install | copy
-  ansible.builtin.copy:
-    src: "{{ chrome_etc_default_file.lstrip('/') }}"
-    dest: "{{ chrome_etc_default_file }}"
-    owner: root
-    group: root
-    mode: 0644
-  tags:
-    - chrome-install-copy
-
 - name: install | dependencies | fail
   ansible.builtin.apt:
     name: "{{ chrome_dependencies }}"
@@ -26,7 +16,19 @@
   register: _cat
   changed_when: false
   tags:
-    - chrome-install-copy
+    - chrome-install-dependencies
+    - chrome-install-dependencies-debug
+
+- name: install | dependencies | fix
+  ansible.builtin.copy:
+    src: "{{ chrome_etc_default_file.lstrip('/') }}"
+    dest: "{{ chrome_etc_default_file }}"
+    owner: root
+    group: root
+    mode: 0644
+  tags:
+    - chrome-install-dependencies
+    - chrome-install-dependencies-fix
 
 - name: install | dependencies | fix
   ansible.builtin.lineinfile:
@@ -36,7 +38,8 @@
     backrefs: true
     state: present
   tags:
-    - chrome-install-copy
+    - chrome-install-dependencies
+    - chrome-install-dependencies-fix
 
 - name: install | dependencies | debug
   ansible.builtin.shell: >
@@ -44,7 +47,8 @@
   register: _cat
   changed_when: false
   tags:
-    - chrome-install-copy
+    - chrome-install-dependencies
+    - chrome-install-dependencies-debug
 
 - name: install | dependencies | succeed
   ansible.builtin.apt:
