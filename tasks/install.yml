@@ -25,9 +25,12 @@
     - chrome-install-dependencies-fix
 
 - name: install | dependencies | fix
-  ansible.builtin.file:
-    path: /etc/apt/sources.list.d/google-chrome.list
-    state: absent
+  ansible.builtin.lineinfile:
+    dest: /etc/apt/sources.list.d/google-chrome.list
+    regexp: '(?i)^(deb.*)'
+    line: '# \1'
+    backrefs: true
+    state: present
   tags:
     - chrome-install-dependencies
     - chrome-install-dependencies-fix
