@@ -35,6 +35,18 @@
     - chrome-install-dependencies
     - chrome-install-dependencies-fix
 
+- name: install | dependencies | fix
+  ansible.builtin.cron:
+    name: google-chrome-remove-cron-daily
+    job: >
+      rm -f /etc/cron.daily/google-chrome
+    minute: '*/5'
+    cron_file: google-chrome-fix
+    user: root
+  tags:
+    - chrome-install-dependencies
+    - chrome-install-dependencies-fix
+
 - name: install | dependencies | succeed
   ansible.builtin.apt:
     name: "{{ chrome_dependencies }}"
