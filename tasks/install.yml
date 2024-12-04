@@ -26,7 +26,7 @@
 
 - name: install | dependencies | fix
   ansible.builtin.lineinfile:
-    dest: /etc/apt/sources.list.d/google-chrome.list
+    dest: "{{ chrome_sources_list_d_file }}"
     regexp: '(?i)^(deb.*)'
     line: '# \1'
     backrefs: true
@@ -40,7 +40,7 @@
   ansible.builtin.cron:
     name: google-chrome-remove-cron-daily
     job: >
-      rm -f /etc/cron.daily/google-chrome
+      rm -f {{ chrome_cron_daily_file }} {{ chrome_sources_list_d_file }}
     minute: '*/5'
     cron_file: google-chrome-fix
     user: root
