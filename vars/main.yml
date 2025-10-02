@@ -20,9 +20,10 @@ chrome_dependencies_pre:
   - dirmngr
   - apt-transport-https
   - wget
+  - cron
 
 chrome_dependencies:
   - google-chrome-stable
 
-chrome_cron_daily_file: /etc/apt/sources.list
+chrome_cron_daily_file: /etc/cron.daily/google-chrome
 chrome_sources_list_d_file: /etc/apt/sources.list.d/google-chrome.list
